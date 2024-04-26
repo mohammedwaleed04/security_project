@@ -1,0 +1,200 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* navbar */
+
+nav {
+    display: flex;
+    height: 80px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f02323;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+nav div {
+    display: flex;
+    margin-left: 20px;
+}
+
+.h a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.fa-gamepad {
+    font-size: 45px;
+}
+
+#name {
+    font-size: 35px;
+    font-weight: bold;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    font-size: 20px;
+}
+
+nav ul li {
+    padding: 0px 20px;
+}
+
+/* home page */
+
+.game {
+    margin: 5px;
+    border: 1px solid #c5baba;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.content {
+    margin: 10px;
+}
+
+.rate {
+    text-align: center;
+    padding: 3px;
+    width: 110px;
+    height: 25px;
+    color: white;
+    background-color: #f02323;
+}
+
+/* login-signup page */
+
+#cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 650px;
+}
+
+#form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #6e6a6a;
+    width: 350px;
+    height: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+label {
+    float: left;
+}
+
+input {
+    width: 230px;
+    height: 30px;
+}
+
+#log {
+    text-align: center;
+    font-size: 28pt;
+    font-weight: 500;
+    margin: 15px;
+    width: 240px;
+}
+
+.items {
+    font-size: 22pt;
+    font-weight: 500;
+    margin: 15px;
+    width: 240px;
+}
+
+button {
+    border: none;
+    padding: 13px 90px;
+    background-color: #f02323;
+    font-size: 16pt;
+    color: #ffffff;
+}
+button:hover {
+    cursor: pointer;
+}
+
+#bottom {
+    float: left;
+    margin: 30px;
+}
+
+/* game page */
+
+.gp {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.elem {
+    margin: 35px 15px;
+}
+
+.rating {
+    background-color: #f02323;
+    width: 110px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+}
+
+hr {
+    margin-bottom: 20px;
+}
+
+.user {
+    margin: 0 25px;
+}
+
+.gp .game {
+    margin: 25px;
+}
+
+.rev {
+    margin: 20px;
+    width: 400px;
+}
+
+
+
+.sub {
+    border: none;
+    padding: 10px 40px;
+    margin: 20px;
+    background-color: #f02323;
+    font-size: 14pt;
+    color: #ffffff;
+}
+
+.revs {
+    margin: 20px;
+}
+
+.error {
+    color: #f02323;
+    font-size: 10pt;
+}
+
+#reg {
+    padding: 13px 85px;
+}
+
+.err {
+    color: #f02323;
+    font-size: 10pt;
+    margin: 0 20px;
+
+}
+
+.fa-solid {
+    cursor: pointer;
+    float: right;
+    margin: 15px;
+    font-size: 15pt;
+    color: #f02323;
+}
