@@ -1,0 +1,14 @@
+<body class="h">
+    {{>nav}}
+    {{#if games.length}}
+        {{#each games}}
+            <a href="/home/game/{{this._id}}">
+                <div class="game">
+                    <h2 class="content">{{this.game}}</h2>
+                    <p class="content">{{this.description}}</p><br>
+                    <div class="rate"><strong>Rating :</strong> {{this.rating}}/10</div>
+                </div>
+            </a>
+        {{/each}}
+    {{/if}}
+</body>

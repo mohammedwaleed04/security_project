@@ -1,0 +1,65 @@
+<body>
+    <div id="cont">
+        <div id="form">
+            <div id="log">Register</div>
+            <div class="items">
+                <label for="username">Username</label><br>
+                <input name="username" type="text" id="username" placeholder="username">
+                <div class="username error"></div>
+            </div>
+            <div class="items">
+                <label for="email">Email</label><br>
+                <input name="email" type="text" id="email" placeholder="Email">
+                <div class="email error"></div>
+            </div>
+            <div class="items">
+                <label for="password">Password</label><br>
+                <input name="password" type="password" id="password" placeholder="Password">
+                <div class="password error"></div>
+            </div><br>
+            <button id="reg">Sign Up</button>
+            <p id="bottom">Already have an account? <a href="/login">Login</a></p>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script>
+        const user = document.querySelector('#username');
+        const mail = document.querySelector('#email');
+        const pass = document.querySelector('#password');
+        const userError = document.querySelector('.username.error');
+        const emailError = document.querySelector('.email.error');
+        const passwordError = document.querySelector('.password.error');
+        const submit = document.querySelector('#reg');
+        submit.addEventListener('click', async (e) => {
+            const encryptedPassword = CryptoJS.AES.encrypt(pass.value, 'anything').toString();
+            userError.textContent = '';
+            emailError.textContent = '';
+            passwordError.textContent = '';
+            const info = {
+                username: user.value,
+                email: mail.value,
+                password: encryptedPassword
+            }
+            try {
+                const response = await fetch('/signup', {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(info)
+                })
+                const data = await response.json();
+                if(data.user) {
+                    location.assign('/home');
+                }
+                else if(data.errors) {
+                    userError.textContent = data.errors.username;
+                    emailError.textContent = data.errors.email;
+                    passwordError.textContent = data.errors.password;
+                }
+            }
+            catch (err) {
+                console.log(err);
+            }
+        })
+    </script>
+</body>

@@ -1,0 +1,55 @@
+<body class="h gp">
+    {{>nav}}
+    <br>
+    <h1 class="user">Add An Article:</h1>
+    <input class="rev title" type="text" placeholder="Add game title">
+    <div class="err titleErr"></div><br>
+    <input type="file" class="rev img"><br>
+    <textarea class="rev des" cols="20" rows="10" placeholder="Add your review"></textarea>
+    <div class="err desErr"></div><br>
+    <input class="rev gameRate" type="text" placeholder="Add a rating from 0 to 10">
+    <div class="err rateErr"></div><br>
+    <button data-id="{{review._id}}" class="sub add">Add</button>
+    <button class="sub cancel">Cancel</button>
+    <script>
+        const title = document.querySelector('.title');
+        const picture = document.querySelector('.img');
+        const review = document.querySelector('.des');
+        const rating = document.querySelector('.gameRate');
+        const titleErr = document.querySelector('.titleErr');
+        const desErr = document.querySelector('.desErr');
+        const rateErr = document.querySelector('.rateErr');
+        const add = document.querySelector('.add');
+        const cancel = document.querySelector('.cancel');
+        add.addEventListener('click', async (e) => {
+            titleErr.textContent = '';
+            desErr.textContent = '';
+            rateErr.textContent = '';
+            const game = {
+                game: title.value,
+                picture: picture.value,
+                description: review.value,
+                rating: rating.value
+            }
+            try {
+                const response = await fetch('/home', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(game)
+                });
+                const data = await response.json();
+                if(data.errors) {
+                    titleErr.textContent = data.errors.game;
+                    desErr.textContent = data.errors.description;
+                    rateErr.textContent = data.errors.rating;
+                }
+                else {
+                    location.assign(data.redirect);
+                }
+            }
+            catch (err) {
+                console.log(err);
+            }
+        })
+    </script>
+</body>

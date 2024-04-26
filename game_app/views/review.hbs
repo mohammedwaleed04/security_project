@@ -1,0 +1,46 @@
+<body class="h gp">
+    {{>nav}}
+    <br>
+    <h1 class="user">Update your review:</h1>
+    <textarea class="rev" cols="20" rows="10" placeholder="Add your review here">{{review.review}}</textarea><br>
+    <input class="rev" type="text" placeholder="Add a rating from 0 to 10" value="{{review.rating}}"><br>
+    <span class="err"></span><br>
+    <button data-id="{{review._id}}" class="sub update">Update</button>
+    <button class="sub cancel">Cancel</button>
+    <script>
+        const review = document.querySelector('textarea.rev');
+        const rating = document.querySelector('input.rev');
+        const ratingError = document.querySelector('.err');
+        const update = document.querySelector('.update');
+        const cancel = document.querySelector('.cancel');
+        update.addEventListener('click', (e) => {
+            ratingError.textContent = '';
+            const info = {
+                id: update.dataset.id,
+                update: {
+                    review: review.value,
+                    rating: rating.value
+                }
+            }
+            if (!info.update.rating) {
+                ratingError.textContent = 'Rating field is required';
+            }
+            else if (info.update.rating < 0 || info.update.rating > 10 || isNaN(info.update.rating)) {
+                ratingError.textContent = 'Rating must be a number between 0 and 10';
+            }
+            else {
+                fetch('/home/userReviews/' + update.dataset.id, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(info)
+                })
+                .then(response => response.json())
+                .then(data => location.assign(data.redirect))
+                .catch(err => console.log(err));
+            }
+        })
+        cancel.addEventListener('click', (e) => {
+            location.assign('/home/userReviews');
+        })
+    </script>
+</body>

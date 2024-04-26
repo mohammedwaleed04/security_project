@@ -1,0 +1,30 @@
+<body class="h gp">
+    {{>nav}}
+    {{#if review}}
+        <h1 class="user revs">Your Reviews:</h1>
+        {{#each review}}
+            <div class="game">
+                <i class="fa-solid fa-trash" data-doc="{{this._id}}"></i>
+                <a href="/home/userReviews/{{this._id}}"><i class="fa-solid fa-pen-to-square"></i></a>
+                <h2 class="content">{{this.game}}</h2>
+                <p class="content">{{this.review}}</p><br>
+                <div class="rate"><strong>Rating :</strong> {{this.rating}}/10</div>
+            </div>
+        {{/each}}
+    {{/if}}
+    <script>
+        const del = document.querySelectorAll('.fa-trash');
+        del.forEach(item => {
+            item.addEventListener('click', (e) => {
+            fetch('/home/userReviews', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({_id: item.dataset.doc})
+                })
+            .then(response => response.json())
+            .then(data => location.assign(data.redirect))
+            .catch(err => console.log(err));
+            })
+        })
+    </script>
+</body>

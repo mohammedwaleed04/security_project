@@ -1,0 +1,59 @@
+<body class="h gp">
+    {{>nav}}
+    <h1 data-id="{{game._id}}" class="elem">{{game.game}}</h1>
+    <p class="elem">{{game.description}}</p>
+    <div class="elem rating"><strong>Rating : </strong> {{game.rating}}/10</div>
+    {{#if reviews}}
+        <hr>
+        <h1 class="user">User Reviews:</h1>
+        {{#each reviews}}
+            <div class="game">
+                <h3 class="content">{{this.user}}</h3>
+                <p class="content">{{this.review}}</p><br>
+                <div class="rate"><strong>Rating :</strong> {{this.rating}}/10</div>
+            </div>
+        {{/each}}
+    {{/if}}
+    {{#if user}}
+        <hr>
+        <h1 class="user">Add your review:</h1>
+        <textarea data-doc="{{user.username}}" class="rev" cols="20" rows="10" placeholder="Add your review here"></textarea><br>
+        <input class="rev" type="text" placeholder="Add a rating from 0 to 10"><br>
+        <span class="err"></span><br>
+        <button class="sub">Submit</button>
+    {{else}}
+        <a href="/login"><button class="sub">Login to add your review</button></a>
+    {{/if}}
+    <script>
+        const game = document.querySelector('h1.elem');
+        const review = document.querySelector('textarea.rev');
+        const rating = document.querySelector('input');
+        const ratingError = document.querySelector('.err');
+        const submit = document.querySelector('.sub');
+        submit.addEventListener('click', (e) => {
+            ratingError.textContent = '';
+            info = {
+                game: game.textContent,
+                user: review.dataset.doc,
+                review: review.value,
+                rating: rating.value
+            }
+            fetch('/home/game/' + game.dataset.id, {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(info)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.redirect){
+                    location.assign(data.redirect)
+                }
+                else if(data.errors) {
+                    ratingError.textContent = data.errors.rating;
+                }
+            })
+            .catch(err => console.log(err));
+        })
+    </script>
+</body>

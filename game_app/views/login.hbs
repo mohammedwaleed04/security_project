@@ -1,0 +1,55 @@
+<body>
+    <div id="cont">
+        <div id="form">
+            <div id="log">Login</div>
+            <div class="items">
+                <label for="email">Email</label><br>
+                <input type="text" id="email" placeholder="Email">
+                <div class="email error"></div>
+            </div>
+            <div class="items">
+                <label for="password">Password</label><br>
+                <input type="password" id="password" placeholder="Password">
+                <div class="password error"></div>
+            </div><br>
+            <button id="reg">Login</button>
+            <p id="bottom">Don't have an accont? <a href="/signup">Register</a></p>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script>
+        const mail = document.querySelector('#email');
+        const pass = document.querySelector('#password');
+        const emailError = document.querySelector('.email.error');
+        const passwordError = document.querySelector('.password.error');
+        const submit = document.querySelector('#reg');
+        submit.addEventListener('click', async (e) => {
+            const encryptedPassword = CryptoJS.AES.encrypt(pass.value, 'anything').toString();
+            emailError.textContent = '';
+            passwordError.textContent = '';
+            const info = {
+                email: mail.value,
+                password: encryptedPassword
+            }
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(info)
+                })
+                const data = await response.json();
+                if(data.user) {
+                    location.assign('/home');
+                }
+                else if(data.errors) {
+                    emailError.textContent = data.errors.email;
+                    passwordError.textContent = data.errors.password;
+                }
+            }
+            catch (err) {
+                console.log(err);
+            }
+        })
+    </script>
+</body>
